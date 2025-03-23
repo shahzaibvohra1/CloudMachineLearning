@@ -101,3 +101,23 @@ def fetch_from_dynamodb(expense_id=None, merchant_name=None, date=None):
             "status": "error",
             "message": str(e)
         }
+    
+def fetch_all_from_dynamodb():
+    """
+    Fetches all expense data from DynamoDB.
+    
+    :return: A list of all expense records.
+    """
+    try:
+        # Reference the DynamoDB table
+        table = dynamodb.Table(TABLE_NAME)
+
+        # Scan the table to fetch all items
+        response = table.scan()
+        return response.get("Items", [])
+
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": str(e)
+        }

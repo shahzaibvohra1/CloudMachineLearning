@@ -102,7 +102,7 @@ def fetch_by_merchant_name():
     except Exception as e:
         return Response(body={"error": str(e)}, status_code=500, cors=True)
 
-@app.route('/fetch/by-date', methods=['GET'])
+@app.route('/fetch/by-date', methods=['GET'], cors=True)
 def fetch_by_date():
     """Fetches expense data by Date."""
     try:
@@ -117,6 +117,20 @@ def fetch_by_date():
             "message": "Data fetched successfully.",
             "data": result
         },status_code=200)
+
+    except Exception as e:
+        return Response(body={"error": str(e)}, status_code=500)
+    
+@app.route('/fetch/all', methods=['GET'], cors=True)
+def fetch_all():
+    """Fetches all expense data from DynamoDB."""
+    try:
+        # Fetch all data from DynamoDB
+        result = dynamo_service.fetch_all_from_dynamodb()
+        return Response(body={
+            "message": "All data fetched successfully.",
+            "data": result
+        }, status_code=200)
 
     except Exception as e:
         return Response(body={"error": str(e)}, status_code=500)
