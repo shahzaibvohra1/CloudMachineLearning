@@ -99,7 +99,24 @@ async function fetchAll() {
         const response = await fetch(`${API_BASE_URL}/fetch/all`);
         const data = await response.json();
         displayResult(data);
+        console.log(response)
     } catch (error) {
+        displayResult({ error: error.message });
+    }
+}
+
+// Fetch by Category
+async function fetchByCategory() {
+    const category = document.getElementById("category").value;
+    if (!category) {
+        alert("Category is required.");
+        return;
+    }
+    try {
+        const response = await fetch(`${API_BASE_URL}/fetch/by-category?category=${category}`);
+        const data = await response.json();
+        displayResult(data);
+    }catch (error) {
         displayResult({ error: error.message });
     }
 }

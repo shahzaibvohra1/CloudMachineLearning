@@ -3,7 +3,7 @@ import uuid
 import os
 from datetime import datetime
 from decimal import Decimal  # Import Decimal module
-from boto3.dynamodb.conditions import Key  
+from boto3.dynamodb.conditions import Key,Attr
 
 # Initialize DynamoDB client
 dynamodb = boto3.resource("dynamodb")
@@ -55,7 +55,7 @@ def save_to_dynamodb(expense_data):
             "message": str(e)
         }
 
-def fetch_from_dynamodb(expense_id=None, merchant_name=None, date=None):
+def fetch_from_dynamodb(expense_id=None, merchant_name=None, date=None, category=None):
     """
     Fetches expense data from DynamoDB based on ExpenseID, MerchantName, or Date.
     
@@ -76,6 +76,10 @@ def fetch_from_dynamodb(expense_id=None, merchant_name=None, date=None):
                 return [response["Item"]]
             else:
                 return []
+        elif category:
+                filter_expression = Attr("Category").eq(category)
+                response = table.scan(FilterExpression=filter_expression)
+                return response.get("Items", [])
         elif merchant_name or date:
             # Query based on MerchantName or Date (secondary index or filter)
             filter_expression = None

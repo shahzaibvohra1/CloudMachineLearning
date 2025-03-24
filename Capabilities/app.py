@@ -134,3 +134,20 @@ def fetch_all():
 
     except Exception as e:
         return Response(body={"error": str(e)}, status_code=500)
+
+@app.route('/fetch/by-category', methods=['GET'], cors=True)
+def fetch_by_category():
+    """Fetches expense data by Category."""
+    try:
+        # Get the Category from query parameters
+        category = app.current_request.query_params.get('category')
+        if not category:
+            return Response(body={"error": "Category is required."}, status_code=400)
+        # Fetch data from DynamoDB
+        result = dynamo_service.fetch_from_dynamodb(category=category)
+        return Response(body={
+            "message": "Data fetched successfully.",
+            "data": result
+        }, status_code=200)
+    except Exception as e:
+        return Response(body={"error": str(e)}, status_code=500)
