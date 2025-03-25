@@ -106,14 +106,15 @@ async function fetchAll() {
 }
 
 // Fetch by Category
-async function fetchByCategory() {
-    const category = document.getElementById("category").value;
-    if (!category) {
-        alert("Category is required.");
+async function fetchByYearMonth() {
+    const year = document.getElementById("year").value;
+    const month = document.getElementById("month").value;
+    if (!year || !month) {
+        alert("Year and Month are required.");
         return;
     }
     try {
-        const response = await fetch(`${API_BASE_URL}/fetch/by-category?category=${category}`);
+        const response = await fetch(`${API_BASE_URL}/fetch/get-total-of-category?month=${month}&year=${year}`);
         const data = await response.json();
         displayResult(data);
     }catch (error) {

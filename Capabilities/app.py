@@ -135,16 +135,21 @@ def fetch_all():
     except Exception as e:
         return Response(body={"error": str(e)}, status_code=500)
 
-@app.route('/fetch/by-category', methods=['GET'], cors=True)
-def fetch_by_category():
-    """Fetches expense data by Category."""
+@app.route('/fetch/get-total-of-category', methods=['GET'], cors=True)
+def fetchget_total_of_category():
+    """Fetches expense data by month and year."""
     try:
-        # Get the Category from query parameters
-        category = app.current_request.query_params.get('category')
-        if not category:
-            return Response(body={"error": "Category is required."}, status_code=400)
+        # Get the month from query parameters
+        month = app.current_request.query_params.get('month')
+        if not month:
+            return Response(body={"error": "Month is required."}, status_code=400)
+        # Get the year from query parameters
+        year = app.current_request.query_params.get('year')
+        if not year:
+            return Response(body={"error": "Year is required."}, status_code=400)
         # Fetch data from DynamoDB
-        result = dynamo_service.fetch_from_dynamodb(category=category)
+        result = dynamo_service.fetch_date_from_dynamodb(month, year)
+        
         return Response(body={
             "message": "Data fetched successfully.",
             "data": result

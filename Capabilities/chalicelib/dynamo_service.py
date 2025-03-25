@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 from decimal import Decimal  # Import Decimal module
 from boto3.dynamodb.conditions import Key,Attr
+from collections import defaultdict
 
 # Initialize DynamoDB client
 dynamodb = boto3.resource("dynamodb")
@@ -55,7 +56,7 @@ def save_to_dynamodb(expense_data):
             "message": str(e)
         }
 
-def fetch_from_dynamodb(expense_id=None, merchant_name=None, date=None, category=None):
+def fetch_from_dynamodb(expense_id=None, merchant_name=None, date=None):
     """
     Fetches expense data from DynamoDB based on ExpenseID, MerchantName, or Date.
     
@@ -76,10 +77,6 @@ def fetch_from_dynamodb(expense_id=None, merchant_name=None, date=None, category
                 return [response["Item"]]
             else:
                 return []
-        elif category:
-                filter_expression = Attr("Category").eq(category)
-                response = table.scan(FilterExpression=filter_expression)
-                return response.get("Items", [])
         elif merchant_name or date:
             # Query based on MerchantName or Date (secondary index or filter)
             filter_expression = None
@@ -120,6 +117,54 @@ def fetch_all_from_dynamodb():
         response = table.scan()
         return response.get("Items", [])
 
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": str(e)
+        }
+        
+def fetch_date_from_dynamodb(month, year):
+    """
+    Fetches expense data from DynamoDB based on Date.
+    :param date: The month and year of the expense.
+    :return: A list of matching expense records.
+    """
+    try:
+        # Reference the DynamoDB table
+        table = dynamodb.Table(TABLE_NAME)
+
+        # Query based on the provided parameters
+        if month and year:
+            # Query based on Month and Year (secondary index or filter)
+            start_date = f"{year}/{month}/01"
+            if month == '12':
+                year_end = int(year)+1
+                end_date = f"{str(year_end)}/01/01"
+            else:
+                month_end = int(month)+1
+                if month_end < 10:
+                    end_date = f"{year}/0{str(month_end)}/01"
+                else:
+                    end_date = f"{year}/{str(month_end)}/01"
+
+            filter_expression = Attr("Date").between(start_date, end_date)
+            if filter_expression:
+                response = table.scan(FilterExpression=filter_expression)
+                record_list = response.get("Items", [])
+                category_totals = defaultdict(float)
+                for record in record_list:
+                    category = record.get("Category", "Uncategorized")
+                    total_amount = float(record.get("TotalAmount", 0.0))
+                    category_totals[category] += total_amount
+                    
+                result = [{"Category": cat, "TotalAmount": round(total, 2)} for cat, total in category_totals.items()]
+
+                return result
+            else:
+                return []
+        else:
+            # No query parameters provided, return date is empty
+            return {"status": "error", "message": "Please select date"}
     except Exception as e:
         return {
             "status": "error",
