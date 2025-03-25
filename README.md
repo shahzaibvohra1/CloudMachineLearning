@@ -2,7 +2,7 @@
 Cloud Machine Learning Project
 
 ## Run backend
-1.⁠ Create and acticate environmetn, isntall boto3, chalice, etc. </br>
+1.⁠ Create and acticate environmetn, isntall boto3, chalice, python-dotenv etc. </br>
 2.⁠ E⁠dit the .env file:
   * STORAGE_BUCKET=your-bucket
   * DYNAMODB_TABLE=ExpenseRecords (same as your table name on dynamodb)
