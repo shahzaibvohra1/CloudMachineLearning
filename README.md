@@ -1,7 +1,7 @@
-# ☁️ Cloud Machine Learning Project
+# ☁️ Expense Manager
 
 ## 📌 Project Description
-Cloud Machine Learning is an AI-powered **Expense Manager** that helps users track, categorize, and manage their expenses using **machine learning**. This project utilizes **AWS cloud services**, including **Amazon Textract** for OCR-based receipt scanning, **Amazon Comprehend** for categorizing the receipts, and **Amazon DynamoDb** for storing the extracted data. The system provides a **user-friendly dashboard** for expense visualization and financial insights. 🚀
+**Expense Manager** is an AI-powered application that helps users track, categorize, and manage their expenses using **machine learning**. This project utilizes **AWS cloud services**, including **Amazon Textract** for OCR-based receipt scanning, **Amazon Comprehend** for categorizing the receipts, and **Amazon DynamoDb** for storing the extracted data. The system provides a **user-friendly dashboard** for expense visualization and financial insights. 🚀
 
 
 
