@@ -48,6 +48,12 @@ def process_receipt():
 
         # Extract text from the uploaded receipt
         extracted_data = textract_service.extract_text_from_receipt(storage_service.get_storage_location(), file_key)
+        
+             # 🚨 **Check if extraction failed or if it's not a receipt**
+        if "error" in extracted_data or extracted_data.get("total_amount") is None:
+            return Response(body={
+                "error": "The uploaded image does not appear to be a receipt. Please upload a valid receipt image."
+            }, status_code=400)
 
     #     # Save the extracted data into DynamoDB
         save_response = dynamo_service.save_to_dynamodb(extracted_data)
