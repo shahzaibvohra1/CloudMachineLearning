@@ -14,12 +14,13 @@ pipenv install boto3 chalice
 pipenv shell
 ```
 
-### 2️⃣ Edit the `.env` file to include:
+### 2️⃣ Create the `.env` file to include:
 ```ini
 STORAGE_BUCKET=your-bucket-name
 DYNAMODB_TABLE=ExpenseRecords
 ```
 - Ensure that `ExpenseRecords` matches your actual DynamoDB table name.
+- save it on the app.py level location
 
 ### 3️⃣ Create your DynamoDB table:
 ```bash
