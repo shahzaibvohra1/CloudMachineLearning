@@ -1,16 +1,50 @@
-# CloudMachineLearning
-Cloud Machine Learning Project
+# ☁️ Cloud Machine Learning Project
 
-## Run backend
-1.⁠ Create and acticate environmetn, isntall boto3, chalice, python-dotenv etc. </br>
-2.⁠ E⁠dit the .env file:
-  * STORAGE_BUCKET=your-bucket
-  * DYNAMODB_TABLE=ExpenseRecords (same as your table name on dynamodb)
+## 📌 Project Description
+Cloud Machine Learning is an AI-powered **Expense Manager** that helps users track, categorize, and manage their expenses using **machine learning**. This project utilizes **AWS cloud services**, including **Amazon Textract** for OCR-based receipt scanning and **Amazon DynamoDb** for storing the extracted data. The system provides a **user-friendly dashboard** for expense visualization and financial insights. 🚀
 
-3.⁠ ⁠⁠Create your dynamodb table. Check the env file for the dynamodb name.
-  * Partition key is ExpenseID</br>
 
-4.⁠ ⁠Run the server with chalice local</br>
 
-To Fetch data from dynamodb table</br>
-5.⁠ ⁠⁠You need to upload receipt via postman or curl with upload endpoint (The index.html in TestApp folder is easy to test api)
+## 🚀 Run Backend
+
+### 1️⃣ Create and activate environment, install necessary dependencies:
+```bash
+pipenv --python 3.10
+pipenv install boto3 chalice
+pipenv shell
+```
+
+### 2️⃣ Edit the `.env` file to include:
+```ini
+STORAGE_BUCKET=your-bucket-name
+DYNAMODB_TABLE=ExpenseRecords
+```
+- Ensure that `ExpenseRecords` matches your actual DynamoDB table name.
+
+### 3️⃣ Create your DynamoDB table:
+```bash
+aws dynamodb create-table \
+ --table-name ExpenseRecords \
+ --attribute-definitions AttributeName=ExpenseID,AttributeType=S \
+ --key-schema AttributeName=ExpenseID,KeyType=HASH \
+ --billing-mode PAY_PER_REQUEST \
+ --region us-east-1
+```
+
+### 4️⃣ Run the server locally using Chalice:
+```bash
+chalice local
+```
+
+## 💻 Run Frontend
+
+### 5️⃣ (To be completed)
+
+## 👥 Authors
+
+**Group 4**
+- **Lei Cao**  
+- **Kirstin Megga Ramos**  
+- **Joan Suaverdez**  
+- **Muhammad Shahzaib Vohra**  
+- **Ruolan Wang**  

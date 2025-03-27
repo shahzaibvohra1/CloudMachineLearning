@@ -1,4 +1,5 @@
 import boto3
+from datetime import datetime
 
 # Initialize Textract client
 textract_client = boto3.client("textract")
@@ -40,6 +41,7 @@ def clean_text(text):
 def extract_text_from_receipt(s3_bucket, file_key):
     """
     Extracts date, merchant name, total amount, and item names from a receipt image stored in S3 using Amazon Textract's analyze_expense.
+    Prevents saving if total amount is missing.
     """
     try:
         response = textract_client.analyze_expense(
@@ -47,11 +49,9 @@ def extract_text_from_receipt(s3_bucket, file_key):
         )
 
         merchant_name = "Unknown Merchant"
-        receipt_date = "Unknown Date"
-        total_amount = 0.00
+        receipt_date = None
+        total_amount = None  # Changed from 0.00 to None
         items = []
-
-        print("\n=== Debug: Extracted Fields ===")
 
         # Loop through extracted expense fields
         for expense_doc in response.get("ExpenseDocuments", []):
@@ -63,22 +63,31 @@ def extract_text_from_receipt(s3_bucket, file_key):
                 if "name" in label:
                     merchant_name = value
                 elif "date" in label:
-                    receipt_date = value
+                    print(f"Extracted raw date: {value}") 
+                    receipt_date = parse_date(value)  # Use helper function to parse date
                 elif "total" in label:
                     try:
                         total_amount = float(value.replace("$", "").replace(",", ""))
                     except ValueError:
-                        total_amount = 0.00
+                        total_amount = None  # Set to None if invalid
 
-            # Extract item names from receipt
-            for line_item_group in expense_doc.get("LineItemGroups", []):
-                for line_item in line_item_group.get("LineItems", []):
-                    for field in line_item.get("LineItemExpenseFields", []):
-                        field_label = field.get("Type", {}).get("Text", "").lower()
-                        field_value = field.get("ValueDetection", {}).get("Text", "")
+        # 🚨 **Validation: Ensure the receipt has a valid total amount**
+        if total_amount is None or total_amount == 0.00:
+            print("⚠️ Validation Failed: No total amount detected. This is not a receipt.")
+            return {"error": "Invalid receipt."}
 
-                        if "item" in field_label and field_value:
-                            items.append(field_value)
+        # 🚀 If total exists, proceed with processing
+        print(f"✅ Valid receipt detected. Proceeding with saving. Total: {total_amount}")
+
+        # Extract item names from receipt
+        for line_item_group in expense_doc.get("LineItemGroups", []):
+            for line_item in line_item_group.get("LineItems", []):
+                for field in line_item.get("LineItemExpenseFields", []):
+                    field_label = field.get("Type", {}).get("Text", "").lower()
+                    field_value = field.get("ValueDetection", {}).get("Text", "")
+
+                    if "item" in field_label and field_value:
+                        items.append(field_value)
 
         # Categorize the expense
         category = categorize_expense(merchant_name, items)
@@ -93,3 +102,29 @@ def extract_text_from_receipt(s3_bucket, file_key):
 
     except Exception as e:
         return {"error": str(e)}
+
+
+def parse_date(date_str):
+    """
+    Parses a date string into an ISO 8601 format (YYYY-MM-DD).
+    Handles various date formats that might appear in receipts.
+    """
+    possible_formats = [
+        "%y/%m/%d", # 25/01/11 → 2025-01-11 
+        "%b %d, %Y",  # Dec 26, 2024 ✅ (Newly Added)
+        "%b %d %Y",   # Mar 31 2025
+        "%Y-%m-%d",   # 2025-03-31
+        "%m/%d/%Y",   # 03/31/2025
+        "%d-%m-%Y",   # 31-03-2025
+        "%d %B %Y",   # 31 March 2025
+        "%B %d, %Y",  # March 31, 2025
+    ]
+    
+    for fmt in possible_formats:
+        try:
+            parsed_date = datetime.strptime(date_str, fmt)
+            return parsed_date.strftime("%Y-%m-%d")  # Convert to ISO 8601 format
+        except ValueError:
+            continue
+
+    return "Invalid Date" 
