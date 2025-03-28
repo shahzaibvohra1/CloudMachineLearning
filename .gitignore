@@ -33,3 +33,5 @@ coverage/
 dist/
 
 *.Zone.Identifier
+*.Zone.Identifier
+**/*.Zone.Identifier
