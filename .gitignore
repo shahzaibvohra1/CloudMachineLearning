@@ -10,6 +10,7 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
+.env:Zone.Identifier
 
 # IDEs and editors
 .idea/
@@ -31,6 +32,9 @@ yarn-error.log*
 # Miscellaneous
 coverage/
 dist/
+
+# environments
+.cml-venv/
 
 *.Zone.Identifier
 *.Zone.Identifier
