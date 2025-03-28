@@ -1,38 +1,125 @@
-.App {
-  text-align: center;
+/* Global styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #fff;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Navbar styles */
+.navbar {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background-color: #90ee90; /* Light green */
+  padding: 1rem;
 }
 
-.App-link {
-  color: #61dafb;
+/* Left side of the navbar: icon + title */
+.navbar-left {
+  display: flex;
+  align-items: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.app-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 0.75rem;
+}
+
+.navbar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Nav links (right side) */
+.nav-links {
+  margin-left: auto;
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-link {
+  color: #333;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.nav-link:hover {
+  background-color: #7ed37e;
+}
+
+.active-link {
+  background-color: #7ed37e;
+  font-weight: bold;
+}
+
+/* Page content container */
+.content-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Upload page styles */
+.upload-header {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.upload-subtext {
+  margin-bottom: 1rem;
+  color: #666;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  width: 100px;
+  margin-right: 0.5rem;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="file"] {
+  flex: 1;
+  padding: 0.4rem;
+  font-size: 1rem;
+}
+
+/* Upload button */
+.upload-button {
+  background-color: #72bf44;
+  border: none;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.upload-button:hover {
+  background-color: #5aa834;
+}
+
+/* Results area */
+.results-container {
+  margin-top: 2rem;
+}
+
+.results-container h4 {
+  margin-bottom: 0.5rem;
+}
+
+.results-container pre {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 5px;
+  white-space: pre-wrap;
 }

@@ -1,40 +1,47 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import "./Navbar.css";
+import { NavLink } from "react-router-dom";
 
-const Navbar = () => {
-  const location = useLocation(); // get current path
-
-  // navbar links
-  const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/history", label: "History" },
-    { path: "/suggestion", label: "Suggestion" },
-    { path: "/prediction", label: "Prediction" },
-  ];
-
+function Navbar() {
   return (
     <nav className="navbar">
-      <div className="title">
-        <img src="/logo_B.png" alt="Logo" className="logo" />
-        Budget Planner
+      <div className="navbar-left">
+        {/* Placeholder icon (40x40) */}
+        <img
+          src="/money-logo.png"
+          alt="App Icon"
+          className="app-icon"
+        />
+        <span className="navbar-title">ExpenseManager</span>
       </div>
-      <ul className="navList">
-        {navItems.map((item) => (
-          <li key={item.path}>
-            <Link
-              to={item.path}
-              className={
-                location.pathname === item.path ? "navLink activeLink" : "navLink"
-              }
-            >
-              {item.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
+
+      <div className="nav-links">
+        <NavLink
+          to="/upload"
+          className={({ isActive }) =>
+            isActive ? "nav-link active-link" : "nav-link"
+          }
+        >
+          Upload
+        </NavLink>
+        <NavLink
+          to="/expenses"
+          className={({ isActive }) =>
+            isActive ? "nav-link active-link" : "nav-link"
+          }
+        >
+          Expenses
+        </NavLink>
+        <NavLink
+          to="/reports"
+          className={({ isActive }) =>
+            isActive ? "nav-link active-link" : "nav-link"
+          }
+        >
+          Reports
+        </NavLink>
+      </div>
     </nav>
   );
-};
+}
 
 export default Navbar;
