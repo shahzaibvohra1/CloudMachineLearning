@@ -135,17 +135,21 @@ def fetch_date_from_dynamodb(month, year):
 
         # Query based on the provided parameters
         if month and year:
+            month_int = int(month)
+            if month_int < 10:
+                month = f"0{month}"
+                start_date = f"{year}-{month}-01"
             # Query based on Month and Year (secondary index or filter)
-            start_date = f"{year}/{month}/01"
+            print(start_date)
             if month == '12':
                 year_end = int(year)+1
-                end_date = f"{str(year_end)}/01/01"
+                end_date = f"{str(year_end)}-01-01"
             else:
-                month_end = int(month)+1
+                month_end = month_int+1
                 if month_end < 10:
-                    end_date = f"{year}/0{str(month_end)}/01"
+                    end_date = f"{year}-0{str(month_end)}-01"
                 else:
-                    end_date = f"{year}/{str(month_end)}/01"
+                    end_date = f"{year}-{str(month_end)}-01"
 
             filter_expression = Attr("Date").between(start_date, end_date)
             if filter_expression:
@@ -159,7 +163,10 @@ def fetch_date_from_dynamodb(month, year):
                     
                 result = [{"Category": cat, "TotalAmount": round(total, 2)} for cat, total in category_totals.items()]
 
-                return result
+                if len(result) > 0:
+                    return result
+                else:
+                    return ["No records found"]
             else:
                 return []
         else:
