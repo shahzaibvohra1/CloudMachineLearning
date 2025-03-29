@@ -1,19 +1,25 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import HomePage from "./components/HomePage";
-import SuggestionPage from "./components/SuggestionPage";
+import Upload from "./components/Upload";
+import Expenses from "./components/Expenses";
+import Reports from "./components/Reports";
 
 function App() {
   return (
-    <Router>
+    <div className="app-container">
       <Navbar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/suggestion" element={<SuggestionPage />} />
-        {/* Add more routes here for other pages */}
-      </Routes>
-    </Router>
+      {/* Define routes for each tab */}
+      <div className="content-container">
+        <Routes>
+          {/* Default to /upload */}
+          <Route path="/" element={<Navigate to="/upload" replace />} />
+          <Route path="/upload" element={<Upload />} />
+          <Route path="/expenses" element={<Expenses />} />
+          <Route path="/reports" element={<Reports />} />
+        </Routes>
+      </div>
+    </div>
   );
 }
 
