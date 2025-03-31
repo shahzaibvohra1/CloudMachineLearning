@@ -1,0 +1,219 @@
+.expenses-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .page-header h1 {
+    color: #2c3e50;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .page-description {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+  }
+  
+  .expenses-table-wrapper {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .expenses-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .expenses-table thead {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .expenses-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+  }
+  
+  .expenses-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #ecf0f1;
+    color: #2c3e50;
+  }
+  
+  .expenses-table tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .expenses-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .category-tag {
+    background-color: #e8f4fd;
+    color: #3498db;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    display: inline-block;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 2rem;
+    color: #7f8c8d;
+    font-size: 1.2rem;
+  }
+  
+  .error {
+    text-align: center;
+    padding: 2rem;
+    color: #e74c3c;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+
+
+/* Filters Container */
+.filters-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .filter-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+  }
+  
+  /* Date Filters */
+  .date-filters {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  
+  .date-input {
+    padding: 0.8rem 1.2rem;
+    border: 2px solid #e0e7ff;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #3c4257;
+    transition: all 0.25s ease;
+    min-width: 180px;
+  }
+  
+  .date-input:hover {
+    border-color: #a5b4fc;
+  }
+  
+  .date-input:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  }
+  
+  .date-separator {
+    color: #94a3b8;
+    font-weight: 500;
+  }
+  
+  /* Category Select */
+  .category-select {
+    padding: 0.8rem 1.2rem;
+    border: 2px solid #e0e7ff;
+    border-radius: 8px;
+    background: white;
+    font-size: 0.95rem;
+    color: #3c4257;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    min-width: 200px;
+  }
+  
+  .category-select:hover {
+    border-color: #a5b4fc;
+  }
+  
+  .category-select:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  }
+  
+  /* Search Input */
+  .search-container {
+    flex: 1;
+    width: 100%;
+
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    border: 2px solid #e0e7ff;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #3c4257;
+    transition: all 0.25s ease;
+    padding-left: 40px;
+    height: 30px;
+   
+  }
+  
+  .search-input::placeholder {
+    color: #94a3b8;
+  }
+  
+  .search-input:hover {
+    border-color: #a5b4fc;
+  }
+  
+  .search-input:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .filters-container {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+    }
+  
+    .filter-group {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .date-filters {
+      flex-direction: column;
+    }
+  
+    .date-input,
+    .category-select,
+    .search-input {
+      width: 100%;
+      min-width: auto;
+    }
+  }
