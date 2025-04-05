@@ -18,7 +18,7 @@ def categorize_expense_with_comprehend(full_text):
             "restaurants": ["restaurant", "fast food", "mcdonalds", "kfc", "subway", "burger king", "diner", "cafe"],
             "shopping": ["shopping", "retail", "amazon", "best buy", "ebay", "clothing", "electronics","dollarama"],
             "healthcare": ["pharmacy", "hospital", "shoppers drug mart", "medicine", "doctor"],
-            "utilities": ["mobile", "internet", "electricity", "power", "hydro", "gas", "water", "billing", "toronto hydro", "fido", "rogers"]
+            "utilities": ["mobile", "internet", "electricity", "power", "hydro", "gas", "water", "billing", "toronto hydro", "fido", "rogers", "enbridge"]
         }
 
         # Confidence-based category scoring
