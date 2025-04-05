@@ -22,7 +22,7 @@ function Reports() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!month || !year) {
+      if (!year) {
         setChartData([]);
         return;
       }
