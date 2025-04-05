@@ -146,15 +146,15 @@ def fetchget_total_of_category():
     """Fetches expense data by month and year."""
     try:
         # Get the month from query parameters
-        month = app.current_request.query_params.get('month')
-        if not month:
-            return Response(body={"error": "Month is required."}, status_code=400)
+        # month = app.current_request.query_params.get('month')
+        # if not month:
+        #     return Response(body={"error": "Month is required."}, status_code=400)
         # Get the year from query parameters
         year = app.current_request.query_params.get('year')
         if not year:
             return Response(body={"error": "Year is required."}, status_code=400)
         # Fetch data from DynamoDB
-        result = dynamo_service.fetch_date_from_dynamodb(month, year)
+        result = dynamo_service.fetch_date_from_dynamodb(year)
         
         return Response(body={
             "message": "Data fetched successfully.",

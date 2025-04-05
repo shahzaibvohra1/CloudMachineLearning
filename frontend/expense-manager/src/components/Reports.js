@@ -29,7 +29,7 @@ function Reports() {
 
       try {
         const response = await fetch(
-          `${API_BASE_URL}/fetch/get-total-of-category?month=${month}&year=${year}`
+          `${API_BASE_URL}/fetch/get-total-of-category?year=${year}`
         );
 
         const contentType = response.headers.get("content-type");
@@ -53,7 +53,7 @@ function Reports() {
     };
 
     fetchData();
-  }, [month, year]);
+  }, [year]);
 
   // Prepare chart data using the keys from your backend ("Category" and "TotalAmount")
   const dataForChart = {
@@ -73,23 +73,6 @@ function Reports() {
       <p>View your monthly expense reports.</p>
 
       <div className="select-month-year">
-        <label style={{ marginRight: "8px" }}>Select Month</label>
-        <select value={month} onChange={(e) => setMonth(e.target.value)}>
-          <option value="">--Select--</option>
-          <option value="1">January</option>
-          <option value="2">February</option>
-          <option value="3">March</option>
-          <option value="4">April</option>
-          <option value="5">May</option>
-          <option value="6">June</option>
-          <option value="7">July</option>
-          <option value="8">August</option>
-          <option value="9">September</option>
-          <option value="10">October</option>
-          <option value="11">November</option>
-          <option value="12">December</option>
-        </select>
-
         <label style={{ margin: "0 8px" }}>Select Year</label>
         <select value={year} onChange={(e) => setYear(e.target.value)}>
           <option value="">--Select--</option>
