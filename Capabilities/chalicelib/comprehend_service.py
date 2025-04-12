@@ -14,11 +14,11 @@ def categorize_expense_with_comprehend(full_text):
 
         # Category mapping
         category_mapping = {
-            "groceries": ["grocery", "supermarket", "food basics", "walmart", "costco", "no frills", "fruit", "apple", "banana", "food", "superstore", "kg"],
+            "groceries": ["grocery", "supermarket", "food basics", "walmart", "costco", "no frills", "fruit", "apple", "banana", "food", "superstore", "kg", "real canadian superstore"],
             "restaurants": ["restaurant", "fast food", "mcdonalds", "kfc", "subway", "burger king", "diner", "cafe"],
             "shopping": ["shopping", "retail", "amazon", "best buy", "ebay", "clothing", "electronics","dollarama"],
-            "healthcare": ["pharmacy", "hospital", "shoppers drug mart", "medicine", "doctor"],
-            "utilities": ["mobile", "internet", "electricity", "power", "hydro", "gas", "water", "billing", "toronto hydro", "fido", "rogers", "enbridge"]
+            "healthcare": ["pharmacy", "hospital", "shoppers drug mart", "medicine", "doctor","shoppers"],
+            "utilities": ["mobile", "internet", "electricity", "power", "hydro", "gas", "water", "billing", "toronto hydro", "fido", "rogers", "enbridge", "bell"]
         }
 
         # Confidence-based category scoring

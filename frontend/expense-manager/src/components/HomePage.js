@@ -44,18 +44,14 @@ const HomePage = () => {
 
       const ocrData = await ocrResponse.json();
       console.log("OCR Response Data:", ocrData);
-      // setOcrResult(ocrData.data);
-      // setEditedData(ocrData.data);
 
       if (ocrData.status === "success" && ocrData.data) {
         setOcrResult(ocrData.data);
-        // setEditedData(ocrData.data);
         console.log("Data being sent to /save:", ocrData.data);
 
         // "/save"
         const saveResponse = await fetch(`${backendUrl}/save`, {
           method: "POST",
-          // headers: { "Content-Type": "application/json" },
           body: JSON.stringify(ocrData.data),
         });
 
@@ -73,18 +69,6 @@ const HomePage = () => {
       setLoading(false);
     }
   };
-
-  // const handleInputChange = (e, field, index = null) => {
-  //   const newData = { ...editedData };
-
-  //   if (index !== null) {
-  //     newData.items[index][field] = e.target.value;
-  //   } else {
-  //     newData[field] = e.target.value;
-  //   }
-
-  //   setEditedData(newData);
-  // };
 
   return (
     <div>
@@ -136,7 +120,37 @@ const HomePage = () => {
       {ocrResult && (
         <div className="ocrResult">
           <h3>OCR Result:</h3>
-          <pre>{JSON.stringify(ocrResult, null, 2)}</pre>
+          <div>
+            <strong>Merchant Name:</strong> {ocrResult.merchant_name}
+          </div>
+          <div>
+            <strong>Date:</strong> {ocrResult.date}
+          </div>
+          <div>
+            <strong>Total Amount:</strong> ${ocrResult.total_amount.toFixed(2)}
+          </div>
+          <div>
+            <strong>Category:</strong> {ocrResult.category}
+          </div>
+
+          <h4>File Details:</h4>
+          <div>
+            <strong>File Key:</strong> {ocrResult.file_key.file_key}
+          </div>
+          <div>
+            <strong>File URL:</strong> <a href={ocrResult.file_key.file_url} target="_blank" rel="noopener noreferrer">View File</a>
+          </div>
+
+          <h4>Save Status:</h4>
+          <div>
+            <strong>Status:</strong> {ocrResult.dynamodb_response.status}
+          </div>
+          <div>
+            <strong>Message:</strong> {ocrResult.dynamodb_response.message}
+          </div>
+          <div>
+            <strong>Expense ID:</strong> {ocrResult.dynamodb_response.ExpenseID}
+          </div>
         </div>
       )}
     </div>
